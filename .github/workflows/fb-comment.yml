@@ -1,7 +1,7 @@
 name: Auto Facebook Comment
 
 on:
-  workflow_dispatch:  # 👈 Important for manual run
+  workflow_dispatch:  # ⬅️ Isse "Run Workflow" button aayega
 
 jobs:
   comment:
@@ -19,5 +19,5 @@ jobs:
       - name: Install Puppeteer
         run: npm install puppeteer
 
-      - name: Run Bot
-        run: node script.js
+      - name: Run Facebook Bot
+        run: node index.js
