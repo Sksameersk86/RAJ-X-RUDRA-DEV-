@@ -4,7 +4,11 @@ const fs = require("fs");
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 (async () => {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'] // 👈 Must for GitHub Actions
+  });
+
   const page = await browser.newPage();
 
   // Load cookies
@@ -12,13 +16,13 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   await page.setCookie(...cookies);
 
   // Facebook Post URL
-  const postUrl = "https://www.facebook.com/61550558518720/posts/122228523338018617/?substory_index=1815342132376864&app=fbl";
+  const postUrl = "https://www.facebook.com/61550558518720/posts/122228523338018617/";
   await page.goto(postUrl, { waitUntil: "networkidle2" });
 
   // Read lines from np.txt
   const lines = fs.readFileSync("np.txt", "utf8").split("\n").filter(Boolean);
 
-  // Delay between each comment in milliseconds (e.g. 5000 = 5 sec)
+  // Delay between each comment
   const delayInMs = 30000;
 
   for (const line of lines) {
