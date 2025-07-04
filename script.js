@@ -6,35 +6,34 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 (async () => {
   const browser = await puppeteer.launch({
     headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: ["--no-sandbox", "--disable-setuid-sandbox"] // 💥 Important for CI like Replit/GitHub
   });
-  const page = await browser.newPage();
 
-  // Mobile user-agent
-  await page.setUserAgent(
-    "Mozilla/5.0 (Linux; Android 10; SM-M305F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Mobile Safari/537.36"
-  );
+  const page = await browser.newPage();
 
   // Load cookies
   const cookies = JSON.parse(fs.readFileSync("cookies.json", "utf8"));
   await page.setCookie(...cookies);
 
-  // Use m.facebook.com
+  // ✅ M.facebook URL
   const postUrl = "https://m.facebook.com/61550558518720/posts/122228523338018617";
-  await page.goto(postUrl, { waitUntil: "networkidle2" });
+  await page.goto(postUrl, { waitUntil: "networkidle2", timeout: 60000 });
 
-  // Read comments from file
+  // Load np.txt messages
   const lines = fs.readFileSync("np.txt", "utf8").split("\n").filter(Boolean);
-  const delayInMs = 15000;
+  const delayInMs = 30000; // 30 sec
 
   for (const line of lines) {
     try {
-      await page.waitForSelector('textarea[name="comment_text"]', { timeout: 10000 });
+      // ✅ Mobile selector for comment box
+      await page.waitForSelector('textarea[name="comment_text"]', { timeout: 15000 });
       await page.type('textarea[name="comment_text"]', line);
-      await page.click('button[type="submit"]'); // Click the Post button
+      await delay(1000);
+      await page.keyboard.press("Enter");
       console.log("✅ Commented:", line);
       await delay(delayInMs);
     } catch (err) {
+      await page.screenshot({ path: "error.png", fullPage: true });
       console.error("❌ Failed to comment:", line, err.message);
     }
   }
