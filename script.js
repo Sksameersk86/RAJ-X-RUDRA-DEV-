@@ -1,4 +1,4 @@
-rssconst puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer");
 const fs = require("fs");
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
