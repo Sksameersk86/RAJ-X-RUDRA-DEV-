@@ -6,34 +6,34 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 (async () => {
   const browser = await puppeteer.launch({
     headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"] // 💥 Important for CI like Replit/GitHub
+    args: ['--no-sandbox'] // 🔐 Render / CI ke liye zaruri
   });
-
   const page = await browser.newPage();
 
-  // Load cookies
+  // ⏺ Load cookies
   const cookies = JSON.parse(fs.readFileSync("cookies.json", "utf8"));
   await page.setCookie(...cookies);
 
-  // ✅ M.facebook URL
-  const postUrl = "https://m.facebook.com/61550558518720/posts/122228523338018617";
-  await page.goto(postUrl, { waitUntil: "networkidle2", timeout: 60000 });
+  // 📌 Target post
+  const postUrl = "https://www.facebook.com/61550558518720/posts/122228523338018617";
+  await page.goto(postUrl, { waitUntil: "networkidle2" });
 
-  // Load np.txt messages
+  // 📸 Screenshot le — sab kuch visible hoga
+  await page.screenshot({ path: 'post-opened.png', fullPage: true });
+  console.log("📸 Screenshot saved: post-opened.png");
+
+  // 📝 Read comments from file
   const lines = fs.readFileSync("np.txt", "utf8").split("\n").filter(Boolean);
-  const delayInMs = 30000; // 30 sec
+  const delayInMs = 30000;
 
   for (const line of lines) {
     try {
-      // ✅ Mobile selector for comment box
-      await page.waitForSelector('textarea[name="comment_text"]', { timeout: 15000 });
-      await page.type('textarea[name="comment_text"]', line);
-      await delay(1000);
+      await page.waitForSelector("textarea[name='comment_text']", { timeout: 15000 });
+      await page.type("textarea[name='comment_text']", line);
       await page.keyboard.press("Enter");
       console.log("✅ Commented:", line);
       await delay(delayInMs);
     } catch (err) {
-      await page.screenshot({ path: "error.png", fullPage: true });
       console.error("❌ Failed to comment:", line, err.message);
     }
   }
