@@ -49,3 +49,44 @@
   },
   {
     "name": "ps_n",
+    "value": "1",
+    "domain": ".facebook.com",
+    "path": "/"
+  },
+  {
+    "name": "c_user",
+    "value": "100022590406634",
+    "domain": ".facebook.com",
+    "path": "/"
+  },
+  {
+    "name": "xs",
+    "value": "1%3ArAk6ecG52eR2FA%3A2%3A1751462579%3A-1%3A-1",
+    "domain": ".facebook.com",
+    "path": "/"
+  },
+  {
+    "name": "pas",
+    "value": "100088819703826%3ALUMzVas0Tg%2C100022590406634%3AeSQwUfO1cs",
+    "domain": ".facebook.com",
+    "path": "/"
+  },
+  {
+    "name": "fr",
+    "value": "0c2WTXFUg5RbNI5ep.AWe_vXIApcomKDyAYd1k_THfk-A1IAdCcBxLkd_WDKIpcwbJ1R8.BoX-Uq..AAA.0.0.BoZTLQ.AWcHapz1guwUZFce_rMiDAkz74Y",
+    "domain": ".facebook.com",
+    "path": "/"
+  },
+  {
+    "name": "wl_cbv",
+    "value": "v2%3Bclient_version%3A2857%3Btimestamp%3A1751462612",
+    "domain": ".facebook.com",
+    "path": "/"
+  },
+  {
+    "name": "fbl_st",
+    "value": "101323342%3BT%3A29191043",
+    "domain": ".facebook.com",
+    "path": "/"
+  }
+]
