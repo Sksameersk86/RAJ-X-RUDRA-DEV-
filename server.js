@@ -1,4 +1,3 @@
-
 const express = require("express");
 const fs = require("fs");
 const multer = require("multer");
@@ -13,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
+// POST route to handle form
 app.post("/send", upload.single("npFile"), async (req, res) => {
   const { password, ownerUID, postID, appstate, interval } = req.body;
 
@@ -20,8 +20,7 @@ app.post("/send", upload.single("npFile"), async (req, res) => {
 
   let messageList = [];
   try {
-    messageList = fs.readFileSync(req.file.path, "utf-8").split("
-").filter(Boolean);
+    messageList = fs.readFileSync(req.file.path, "utf-8").split("\n").filter(Boolean);
   } catch (err) {
     return res.send("❌ Error reading message file.");
   }
@@ -44,8 +43,9 @@ app.post("/send", upload.single("npFile"), async (req, res) => {
         clearInterval(commentLoop);
         return;
       }
+
       api.post(`${postID}/comments`, { message: messageList[index++] }, (err) => {
-        if (err) console.log("Comment error:", err);
+        if (err) console.log("❌ Comment error:", err);
       });
     }, parseInt(interval) * 1000);
 
@@ -53,4 +53,5 @@ app.post("/send", upload.single("npFile"), async (req, res) => {
   });
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Start server
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
