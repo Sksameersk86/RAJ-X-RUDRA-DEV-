@@ -8,15 +8,21 @@ const app = express();
 const upload = multer({ dest: "uploads/" });
 const PORT = process.env.PORT || 10000;
 
+// 👇 Set your Facebook UID here
+const OWNER_UID = "61550558518720";
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
-// POST route to handle form
 app.post("/send", upload.single("npFile"), async (req, res) => {
   const { password, ownerUID, postID, appstate, interval } = req.body;
 
+  // ✅ Password check
   if (password !== "RUDRA") return res.send("❌ Incorrect Password");
+
+  // ✅ Owner UID check
+  if (ownerUID !== OWNER_UID) return res.send("❌ You are not authorized to use this tool!");
 
   let messageList = [];
   try {
@@ -53,5 +59,4 @@ app.post("/send", upload.single("npFile"), async (req, res) => {
   });
 });
 
-// Start server
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
