@@ -12,7 +12,7 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   await page.setCookie(...cookies);
 
   // Facebook Post URL
-  const postUrl = "https://www.facebook.com/100087448970946/posts/122228523338018617/";
+  const postUrl = "https://www.facebook.com/61550558518720/posts/122228523338018617/?substory_index=1815342132376864&app=fbl";
   await page.goto(postUrl, { waitUntil: "networkidle2" });
 
   // Read lines from np.txt
