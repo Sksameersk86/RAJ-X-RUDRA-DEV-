@@ -10,6 +10,6 @@
     "express": "latest",
     "body-parser": "latest",
     "multer": "latest",
-    "fca-unofficial": "latest"
+    "fca-smart-shankar": "^13.0.0"
   }
 }
