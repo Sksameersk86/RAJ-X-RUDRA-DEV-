@@ -16,7 +16,7 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   await page.setCookie(...cookies);
 
   // Facebook Post URL
-  const postUrl = "https://www.facebook.com/rudra.461718/videos/1361526665145629/";
+  const postUrl = "https://www.facebook.com/61550558518720/posts/122228523338018617/?substory_index=1815342132376864&app=fbl";
   await page.goto(postUrl, { waitUntil: "networkidle2" });
 
   // Screenshot only once to confirm login/post open
